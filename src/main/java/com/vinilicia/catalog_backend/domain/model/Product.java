@@ -34,6 +34,14 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+        name = "product_person",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    private Set<Person> owners = new HashSet<>();
+
     protected Product() {}
 
     public Product(String name, int quantity) {
@@ -67,5 +75,9 @@ public class Product {
 
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    public Set<Person> getOwners() {
+        return owners;
     }
 }
