@@ -1,9 +1,8 @@
 package com.vinilicia.catalog_backend.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -14,6 +13,9 @@ public class Category {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     protected Category() {}
 
@@ -27,5 +29,9 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 }
