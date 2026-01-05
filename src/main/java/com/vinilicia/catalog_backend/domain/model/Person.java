@@ -12,6 +12,9 @@ public class Person {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @ManyToMany(mappedBy = "owners")
+    private Set<Product> products = new HashSet<>();
+
     protected Person() {}
 
     public Person(String name) {
@@ -24,5 +27,9 @@ public class Person {
 
     public String getName() {
         return name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 }
