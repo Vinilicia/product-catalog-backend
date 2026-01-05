@@ -1,6 +1,8 @@
 package com.vinilicia.catalog_backend.domain.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Person {
