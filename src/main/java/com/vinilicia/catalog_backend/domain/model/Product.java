@@ -53,8 +53,8 @@ public class Product {
         return description;
     }
 
-    public List<String> getImagePaths() {
-        return imagePaths;
+    public String getImagePath() {
+        return imagePath;
     }
 
     public int getQuantity() {
