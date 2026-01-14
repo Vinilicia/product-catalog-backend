@@ -45,6 +45,13 @@ public class Product {
     protected Product() {}
 
     public Product(String name, int quantity) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Product name is required");
+        }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+
         this.name = name;
         this.quantity = quantity;
     }
