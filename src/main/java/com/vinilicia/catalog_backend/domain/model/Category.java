@@ -20,6 +20,10 @@ public class Category {
     protected Category() {}
 
     public Category(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Category name is required");
+        }
+
         this.name = name;
     }
 
@@ -32,6 +36,21 @@ public class Category {
     }
 
     public Set<Product> getProducts() {
-        return products;
+        return Set.copyOf(products);
+    }
+
+    public void rename(String newName) {
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException("Category name is required");
+        }
+        this.name = newName;
+    }
+
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.products.remove(product);
     }
 }
