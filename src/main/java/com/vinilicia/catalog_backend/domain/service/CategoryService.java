@@ -1,6 +1,7 @@
 package com.vinilicia.catalog_backend.domain.service;
 
 import com.vinilicia.catalog_backend.domain.model.Category;
+import com.vinilicia.catalog_backend.domain.model.Product;
 import com.vinilicia.catalog_backend.domain.repository.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -31,7 +32,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<Category> getAllCategorys() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
@@ -50,6 +51,16 @@ public class CategoryService {
 
     @Transactional
     public void deleteCategory(Long id) {
-        categoryRepository.findById(id).ifPresent(categoryRepository::delete);
+        Category category = categoryRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new EntityNotFoundException("Category not found")
+            );
+
+        for (Product product : category.getProducts()) {
+            product.removeCategory(category);
+        }
+
+        categoryRepository.delete(category);
     }
 }

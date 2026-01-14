@@ -1,6 +1,7 @@
 package com.vinilicia.catalog_backend.domain.service;
 
 import com.vinilicia.catalog_backend.domain.model.Person;
+import com.vinilicia.catalog_backend.domain.model.Product;
 import com.vinilicia.catalog_backend.domain.repository.PersonRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -46,6 +47,14 @@ public class PersonService {
 
     @Transactional
     public void deletePerson(Long id) {
-        personRepository.findById(id).ifPresent(personRepository::delete);
+        Person person = personRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Person not found"));
+
+        for (Product product : person.getProducts()) {
+            product.removeOwner(person);
+        }
+
+        personRepository.delete(person);
     }
 }
