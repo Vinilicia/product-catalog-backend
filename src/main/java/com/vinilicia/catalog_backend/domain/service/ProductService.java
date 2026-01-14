@@ -1,5 +1,7 @@
 package com.vinilicia.catalog_backend.domain.service;
 
+import com.vinilicia.catalog_backend.domain.model.Category;
+import com.vinilicia.catalog_backend.domain.model.Person;
 import com.vinilicia.catalog_backend.domain.model.Product;
 import com.vinilicia.catalog_backend.domain.repository.CategoryRepository;
 import com.vinilicia.catalog_backend.domain.repository.PersonRepository;
@@ -13,9 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final PersonRepository personRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(
+        ProductRepository productRepository,
+        CategoryRepository categoryRepository,
+        PersonRepository personRepository
+    ) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.personRepository = personRepository;
     }
 
     @Transactional
@@ -62,6 +72,10 @@ public class ProductService {
 
         if (local != null) {
             product.changeLocation(local);
+        }
+
+        if (imagePath != null) {
+            product.changeImage(imagePath);
         }
 
         if (stockDelta > 0) {
