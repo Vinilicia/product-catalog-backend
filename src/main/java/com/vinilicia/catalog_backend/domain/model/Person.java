@@ -20,6 +20,10 @@ public class Person {
     protected Person() {}
 
     public Person(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Person name is required");
+        }
+
         this.name = name;
     }
 
@@ -33,5 +37,20 @@ public class Person {
 
     public Set<Product> getProducts() {
         return products;
+    }
+
+    public void rename(String newName) {
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException("Person name is required");
+        }
+        this.name = newName;
+    }
+
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.products.remove(product);
     }
 }
